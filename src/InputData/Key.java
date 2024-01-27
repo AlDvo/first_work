@@ -12,7 +12,7 @@ public class Key {
         try {
             this.key = scan.nextInt();
         } catch (InputMismatchException e) {
-            System.out.println("Указанно не корректное значение ключа, используется значение по умолчанию '0' ");   ;
+            System.out.println("Указанно не корректное значение ключа, используется значение по умолчанию '0' ");
         }
     }
 

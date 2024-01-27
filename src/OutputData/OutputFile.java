@@ -16,17 +16,6 @@ public class OutputFile {
         this.path = Path.of(outputFileAddress);
     }
 
-    public void checkFile()  {
-        if(!Files.isDirectory(path)){
-            try {
-                throw new FileNotFoundException("По указанному адрессу отсутсвует директория");
-            } catch (FileNotFoundException e) {
-                System.out.println("По указанному адрессу отсутсвует директория");
-                throw new RuntimeException(e);
-            }
-        }
-    }
-
     public void writeFile(OutputText outputText){
         try {
             Files.writeString(path, outputText.getInputText());
