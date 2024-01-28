@@ -9,10 +9,10 @@ public class InputFile {
     private String inputFileAddress;
     private Path path;
 
-    public InputFile() {
+    public void readPath(){
         Scanner scan = new Scanner(System.in);
         System.out.println("Укажите адресс фаила, откуда считываем текст ");
-        this.inputFileAddress = scan.nextLine();
+        inputFileAddress = scan.nextLine();
         this.path = Path.of(inputFileAddress);
     }
 

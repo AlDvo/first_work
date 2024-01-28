@@ -6,7 +6,7 @@ import java.nio.file.Files;
 public class InputText {
     private String inputText;
 
-    public InputText(InputFile input) {
+    public void readInputText(InputFile input) {
         try {
             this.inputText = Files.readString(input.getPath()).toLowerCase();
         } catch (IOException e) {

@@ -6,7 +6,7 @@ import java.util.Scanner;
 public class Key {
     private int key;
 
-    public Key() {
+    public void readKey(){
         Scanner scan = new Scanner(System.in);
         System.out.println("Укажите ключ ");
         try {

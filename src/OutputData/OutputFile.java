@@ -8,10 +8,11 @@ import java.util.Scanner;
 public class OutputFile {
     private  String outputFileAddress;
     private Path path;
-    public OutputFile() {
+
+    public void readPath(){
         Scanner scan = new Scanner(System.in);
-        System.out.println("Укажите адресс фаила, куда записываем текст ");
-        this.outputFileAddress = scan.nextLine();
+        System.out.println("Укажите адресс фаила, откуда считываем текст ");
+        outputFileAddress = scan.nextLine();
         this.path = Path.of(outputFileAddress);
     }
 

@@ -10,7 +10,7 @@ public class OutputText {
 
     private String move;
 
-    public OutputText() {
+    public void chooseAction() {
         Scanner scan = new Scanner(System.in);
         System.out.println("Укажите что делаем с фаилом: 'шифровать' или 'расшифровать'");
         move = scan.nextLine();
