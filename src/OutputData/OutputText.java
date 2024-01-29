@@ -1,6 +1,8 @@
 package OutputData;
 
 import Cryption.Crypt;
+import InputData.InputText;
+import InputData.Key;
 
 
 import java.util.Scanner;
@@ -12,17 +14,26 @@ public class OutputText {
 
     public void chooseAction() {
         Scanner scan = new Scanner(System.in);
-        System.out.println("Укажите что делаем с фаилом: 'шифровать' или 'расшифровать'");
+        System.out.println("Укажите что делаем с фаилом: 'шифровать', 'расшифровать', 'brute Force'");
         move = scan.nextLine();
     }
 
-    public void crypt(Crypt crypt) {
-        if ("шифровать".equals(move)) {
-            this.outputText = crypt.encrypt();
-        } else if ("расшифровать".equals(move)) {
-            this.outputText = crypt.decrypt();
-        } else {
-            System.out.println("название манипуляции с фаилом указано не корректно");
+    public void crypt(Crypt crypt, InputText inputText) {
+        switch (move) {
+            case "шифровать" -> {
+                Key key = new Key();
+                key.readKey();
+                this.outputText = crypt.getStringRepresentation(crypt.encrypt(inputText, key.getKey()));
+            }
+            case "расшифровать" -> {
+                Key key = new Key();
+                key.readKey();
+                this.outputText = crypt.getStringRepresentation(crypt.decrypt(inputText, key.getKey()));
+            }
+            case "brute Force" -> {
+                this.outputText = crypt.getStringRepresentation(crypt.decrypt(inputText, crypt.bruteForce(inputText)));
+            }
+            case null, default -> System.out.println("название манипуляции с фаилом указано не корректно");
         }
     }
 

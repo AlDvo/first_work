@@ -1,7 +1,6 @@
 import Cryption.Crypt;
 import InputData.InputText;
 import InputData.InputFile;
-import InputData.Key;
 import OutputData.OutputFile;
 import OutputData.OutputText;
 
@@ -15,17 +14,14 @@ public class Main {
         OutputFile output = new OutputFile();
         output.readPath();
 
-        Key key = new Key();
-        key.readKey();
-
         InputText inputText = new InputText();
         inputText.readInputText(input);
 
-        Crypt crypt = new Crypt(inputText,key);
+        Crypt crypt = new Crypt();
 
         OutputText outputText = new OutputText();
         outputText.chooseAction();
-        outputText.crypt(crypt);
+        outputText.crypt(crypt, inputText);
 
         output.writeFile(outputText);
 
