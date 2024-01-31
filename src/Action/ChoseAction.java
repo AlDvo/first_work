@@ -96,7 +96,10 @@ public class ChoseAction {
 
                 output.writeFile(action);
             }
-            case null, default -> System.out.println(CHOSE_ACTION_ERROR);
+            case null, default -> {
+                System.out.println(CHOSE_ACTION_ERROR);
+                crypt();
+            }
         }
     }
 }
