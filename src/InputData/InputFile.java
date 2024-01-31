@@ -1,5 +1,7 @@
 package InputData;
 
+import CheckPath.CheckPath;
+import MyException.ErrorExtensionException;
 import MyException.FileMissingException;
 
 import java.io.IOException;
@@ -7,8 +9,9 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Scanner;
 
-import static Constant.Constant.ADDRESS_INPUT_FILE_NOT_FOUND;
+import static Constant.Constant.ERROR_EXTENSION_FILE;
 import static Constant.Constant.REPEAT_ADDRESS_FILE;
+import static Constant.Constant.ADDRESS_INPUT_FILE_NOT_FOUND;
 import static Constant.Constant.STRING_NOT_SUITABLE;
 import static Constant.Constant.ADDRESS_INPUT_EXAMPLE_FILE;
 
@@ -21,6 +24,17 @@ public class InputFile {
         Scanner scan = new Scanner(System.in);
         String inputFileAddress = scan.nextLine();
         this.path = Path.of(inputFileAddress);
+
+        CheckPath check = new CheckPath();
+        try {
+            check.checkPath(path);
+        } catch (ErrorExtensionException e) {
+            System.out.println(ERROR_EXTENSION_FILE);
+            System.out.println(REPEAT_ADDRESS_FILE);
+            readPath();
+            checkFile();
+            readInputText();
+        }
     }
 
     public void checkFile() {
@@ -32,6 +46,7 @@ public class InputFile {
                 System.out.println(REPEAT_ADDRESS_FILE);
                 readPath();
                 checkFile();
+                readInputText();
             }
         }
     }

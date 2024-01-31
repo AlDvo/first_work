@@ -1,12 +1,16 @@
 package OutputData;
 
 import Action.Action;
+import CheckPath.CheckPath;
+import MyException.ErrorExtensionException;
 
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Scanner;
 
+import static Constant.Constant.ERROR_EXTENSION_FILE;
+import static Constant.Constant.REPEAT_ADDRESS_FILE;
 import static Constant.Constant.ERROR_WRITE_FILE;
 
 
@@ -17,6 +21,15 @@ public class OutputFile {
         Scanner scan = new Scanner(System.in);
         String outputFileAddress = scan.nextLine();
         this.path = Path.of(outputFileAddress);
+
+        CheckPath check = new CheckPath();
+        try {
+            check.checkPath(path);
+        } catch (ErrorExtensionException e) {
+            System.out.println(ERROR_EXTENSION_FILE);
+            System.out.println(REPEAT_ADDRESS_FILE);
+            readPath();
+        }
     }
 
     public void writeFile(Action action) {
