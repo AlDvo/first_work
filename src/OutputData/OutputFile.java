@@ -1,29 +1,29 @@
 package OutputData;
 
+import Action.Action;
+
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Scanner;
 
+import static constant.Constant.ERROR_WRITE_FILE;
+
 public class OutputFile {
-    private  String outputFileAddress;
     private Path path;
 
-    public void readPath(){
+    public void readPath() {
         Scanner scan = new Scanner(System.in);
-        System.out.println("Укажите адресс фаила, откуда считываем текст ");
-        outputFileAddress = scan.nextLine();
+        String outputFileAddress = scan.nextLine();
         this.path = Path.of(outputFileAddress);
     }
 
-    public void writeFile(OutputText outputText){
+    public void writeFile(Action action) {
         try {
-            Files.writeString(path, outputText.getInputText());
+            Files.writeString(path, action.getInputText());
         } catch (IOException e) {
-            System.out.println("Ошибка при записи данных в фаил");
+            System.out.println(ERROR_WRITE_FILE);
             throw new RuntimeException(e);
         }
     }
-
-
 }

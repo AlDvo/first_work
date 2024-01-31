@@ -1,15 +1,15 @@
-package Cryption;
+package Action;
 
-import InputData.InputText;
+import InputData.InputFile;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+
+import static constant.Constant.ALPHABET;
 
 public class Crypt {
-    private static final char[] ALPHABET = {'а', 'б', 'в', 'г', 'д', 'е', 'ё', 'ж', 'з',
-            'и', 'й', 'к', 'л', 'м', 'н', 'о', 'п', 'р', 'с', 'т', 'у', 'ф', 'х', 'ц', 'ч', 'ш', 'щ',
-            'ъ', 'ы', 'ь', 'э', 'ю', 'я', '.', ',', '«', '»', '"', '\'', ':', '!', '?', ' ', ')', '(', '\n'};
-
-    public List<Character> encrypt(InputText inputText, int key) {
+    public List<Character> encrypt(InputFile inputText, int key) {
         List<Character> outputText = new ArrayList<>();
 
         for (int i = 0; i < inputText.getInputText().length(); i++) {
@@ -27,7 +27,7 @@ public class Crypt {
         return outputText;
     }
 
-    public List<Character> decrypt(InputText inputText, int key) {
+    public List<Character> decrypt(InputFile inputText, int key) {
         List<Character> outputText = new ArrayList<>();
 
         for (int i = 0; i < inputText.getInputText().length(); i++) {
@@ -45,7 +45,44 @@ public class Crypt {
         return outputText;
     }
 
-    public int bruteForce(InputText inputText) {
+    public Set<String> findOftenWord(String text) {
+        List<String> example = new ArrayList<>(List.of(text.split(" ")));
+        Set<String> statistic = new HashSet<>();
+        for (String s : example) {
+            if (s.length() < 4 && !s.equals(" ")) {
+                statistic.add(s);
+            }
+        }
+        return statistic;
+    }
+
+    public int bruteForce(InputFile exampleInputText, InputFile decryptText) {
+        int coincidence = Integer.MIN_VALUE;
+        int key = 0;
+        Set<String> oftenWordExampleText = findOftenWord(exampleInputText.getInputText());
+
+        for (int i = 0; i < ALPHABET.length; i++) {
+            int tmpCoincidence = 0;
+            String cryptText = getStringRepresentation(decrypt(decryptText, i));
+            Set<String> oftenWordCryptText = findOftenWord(cryptText);
+
+            for (String example : oftenWordExampleText) {
+                for (String crypt : oftenWordCryptText) {
+                    if (example.equals(crypt)) {
+                        tmpCoincidence++;
+                    }
+                }
+            }
+
+            if (tmpCoincidence > coincidence) {
+                coincidence = tmpCoincidence;
+                key = i;
+            }
+        }
+        return key;
+    }
+
+    public int statisticAnalyze(InputFile inputText) {
         int coincidence = Integer.MIN_VALUE;
         int key = 0;
         List<Character> tempOutputText;
@@ -54,8 +91,9 @@ public class Crypt {
             int tmpCoincidence = 0;
             tempOutputText = decrypt(inputText, i);
 
-            for (Character character : tempOutputText) {
-                if (character == ' ') {
+            for (int j = 1; j < tempOutputText.size(); j++) {
+                if (tempOutputText.get(j) == ' ' && tempOutputText.get(j - 1) == ',' ||
+                        tempOutputText.get(j) == ' ' && tempOutputText.get(j - 1) == '.') {
                     tmpCoincidence++;
                 }
             }
