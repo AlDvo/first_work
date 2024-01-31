@@ -7,7 +7,8 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Scanner;
 
-import static constant.Constant.ERROR_WRITE_FILE;
+import static Constant.Constant.ERROR_WRITE_FILE;
+
 
 public class OutputFile {
     private Path path;

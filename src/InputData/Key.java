@@ -3,9 +3,9 @@ package InputData;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
-import static constant.Constant.ALPHABET;
-import static constant.Constant.INCORRECT_KEY;
-import static constant.Constant.ENTER_KEY;
+import static Constant.Constant.ALPHABET;
+import static Constant.Constant.INCORRECT_KEY;
+import static Constant.Constant.ENTER_KEY;
 
 public class Key {
     private int key;
@@ -18,6 +18,7 @@ public class Key {
             this.key = scan.nextInt();
         } catch (InputMismatchException e) {
             System.out.println(INCORRECT_KEY);
+            readKey();
         }
     }
 

@@ -6,7 +6,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import static constant.Constant.ALPHABET;
+import static Constant.Constant.ALPHABET;
 
 public class Crypt {
     public List<Character> encrypt(InputFile inputText, int key) {

@@ -4,11 +4,11 @@ import InputData.InputFile;
 import OutputData.OutputFile;
 import java.util.Scanner;
 
-import static constant.Constant.CHOSE_ACTION;
-import static constant.Constant.ADDRESS_INPUT_FILE;
-import static constant.Constant.ADDRESS_OUTPUT_FILE;
-import static constant.Constant.ADDRESS_INPUT_EXAMPLE_FILE;
-import static constant.Constant.CHOSE_ACTION_ERROR;
+import static Constant.Constant.CHOSE_ACTION;
+import static Constant.Constant.ADDRESS_INPUT_FILE;
+import static Constant.Constant.ADDRESS_OUTPUT_FILE;
+import static Constant.Constant.ADDRESS_INPUT_EXAMPLE_FILE;
+import static Constant.Constant.CHOSE_ACTION_ERROR;
 
 
 public class ChoseAction {

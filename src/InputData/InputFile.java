@@ -1,14 +1,17 @@
 package InputData;
 
-import java.io.FileNotFoundException;
+import MyException.FileMissingException;
+
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Scanner;
 
-import static constant.Constant.ADDRESS_INPUT_FILE_NOT_FOUND;
-import static constant.Constant.STRING_NOT_SUITABLE;
-import static constant.Constant.ADDRESS_INPUT_EXAMPLE_FILE;
+import static Constant.Constant.ADDRESS_INPUT_FILE_NOT_FOUND;
+import static Constant.Constant.REPEAT_ADDRESS_FILE;
+import static Constant.Constant.STRING_NOT_SUITABLE;
+import static Constant.Constant.ADDRESS_INPUT_EXAMPLE_FILE;
+
 
 public class InputFile {
     private Path path;
@@ -23,10 +26,12 @@ public class InputFile {
     public void checkFile() {
         if (!Files.isRegularFile(path)) {
             try {
-                throw new FileNotFoundException(ADDRESS_INPUT_FILE_NOT_FOUND);
-            } catch (FileNotFoundException e) {
+                throw new FileMissingException(ADDRESS_INPUT_FILE_NOT_FOUND);
+            } catch (Exception e) {
                 System.out.println(ADDRESS_INPUT_FILE_NOT_FOUND);
-                throw new RuntimeException(e);
+                System.out.println(REPEAT_ADDRESS_FILE);
+                readPath();
+                checkFile();
             }
         }
     }
@@ -36,7 +41,10 @@ public class InputFile {
             this.inputText = Files.readString(path).toLowerCase();
         } catch (IOException e) {
             System.out.println(ADDRESS_INPUT_FILE_NOT_FOUND);
-            throw new RuntimeException(e);
+            System.out.println(REPEAT_ADDRESS_FILE);
+            readPath();
+            checkFile();
+            readInputText();
         }
     }
 
