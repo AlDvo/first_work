@@ -5,7 +5,7 @@ public class Constant {
     public static final char[] ALPHABET = {'а', 'б', 'в', 'г', 'д', 'е', 'ё', 'ж', 'з',
             'и', 'й', 'к', 'л', 'м', 'н', 'о', 'п', 'р', 'с', 'т', 'у', 'ф', 'х', 'ц', 'ч', 'ш', 'щ',
             'ъ', 'ы', 'ь', 'э', 'ю', 'я', '.', ',', '«', '»', '"', '\'', ':', '!', '?', ' ', ')', '(', '\n'};
-    public static final String[] EXTENSION = {"txt", "doc", "docx", "xls", "rtf"};
+    public static final String[] EXTENSION = {".txt", ".doc", ".docx", ".xls", ".rtf"};
     public static final String ADDRESS_INPUT_FILE = "Укажите адресс фаила, откуда считываем текст ";
     public static final String ADDRESS_INPUT_FILE_NOT_FOUND = "По указанному адрессу отсутсвует фаил для чтения";
     public static final String ADDRESS_OUTPUT_FILE = "Укажите адресс и название фаила, куда записываем текст изменённый текст";

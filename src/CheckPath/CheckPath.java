@@ -9,23 +9,13 @@ import static Constant.Constant.EXTENSION;
 
 public class CheckPath {
 
-    private String getExtension(String text) {
-        String extension;
-        if (text.lastIndexOf('.') > 1) {
-            extension = text.substring(text.lastIndexOf('.') + 1);
-            return extension;
-        }
-        return null;
-    }
-
     private Boolean checkExtension(String extension) {
-        boolean match = false;
         for (String s : EXTENSION) {
-            if (s.equals(getExtension(extension))) {
-                match = true;
+            if (extension.endsWith(s)) {
+                return true;
             }
         }
-        return match;
+        return false;
     }
 
     public void checkPath(Path path) throws ErrorExtensionException {
