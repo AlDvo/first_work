@@ -1,4 +1,4 @@
-package Constant;
+package dvorenenko.ru.constant;
 
 public class Constant {
 
@@ -18,4 +18,9 @@ public class Constant {
     public static final String ADDRESS_INPUT_EXAMPLE_FILE = "Укажите адресс фаила с примером текста откуда считываем текст, для расшифровки методом brute force";
     public static final String STRING_NOT_SUITABLE = "Данный текст не подходит для анализа";
     public static final String REPEAT_ADDRESS_FILE = "Укажите корректный адресс фаила";
+    public static final int MIN_SYMBOLS_FOR_FIND_WORD = 4;
+    public static final String STRING_SPACE = " ";
+    public static final char CHAR_SPACE = ' ';
+    public static final char POINT = '.';
+    public static final char COMMA = ',';
 }
