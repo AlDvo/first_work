@@ -14,28 +14,36 @@ import static dvorenenko.ru.constant.Constant.ERROR_WRITE_FILE;
 
 
 public class OutputFile {
+    private Path path;
 
-    public void writeFile(String inputText, Scanner scan, CheckPath check) {
+    public void readAndCheckOutputPath(){
+        readPath();
+        checkOutputPath();
+    }
+
+    private void readPath() {
+        Scanner scan = new Scanner(System.in);
+        String outputFileAddress = scan.nextLine();
+        this.path = Path.of(outputFileAddress);
+    }
+
+    private void checkOutputPath() {
+        CheckPath check = new CheckPath();
         try {
-            Files.writeString(readPath(scan, check), inputText);
+            check.checkPath(path);
+        } catch (ErrorExtensionException e) {
+            System.out.println(ERROR_EXTENSION_FILE);
+            System.out.println(REPEAT_ADDRESS_FILE);
+            readPath();
+        }
+    }
+
+    public void writeFile(String action) {
+        try {
+            Files.writeString(path, action);
         } catch (IOException e) {
             System.out.println(ERROR_WRITE_FILE);
             throw new RuntimeException(e);
         }
-    }
-
-    private Path readPath(Scanner scan, CheckPath check) {
-        String outputFileAddress = scan.nextLine();
-        Path path = Path.of(outputFileAddress);
-
-        try {
-            check.checkPath(path);
-            return path;
-        } catch (ErrorExtensionException e) {
-            System.out.println(ERROR_EXTENSION_FILE);
-            System.out.println(REPEAT_ADDRESS_FILE);
-            readPath(scan, check);
-        }
-        return null;
     }
 }
