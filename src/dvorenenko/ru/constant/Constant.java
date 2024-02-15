@@ -1,4 +1,4 @@
-package Constant;
+package dvorenenko.ru.constant;
 
 public class Constant {
 
@@ -12,7 +12,6 @@ public class Constant {
     public static final String ERROR_WRITE_FILE = "Ошибка при записи данных в фаил";
     public static final String ERROR_EXTENSION_FILE = "НЕ корректное расширение фаила";
     public static final String ENTER_KEY = "Укажите ключ смещения";
-    public static final String INCORRECT_KEY = "Указанно не корректное значение ключа";
     public static final String CHOSE_ACTION = "Укажите номер действия: \n0 - 'шифровать',\n1 - 'расшифровать',\n2 - 'brute force',\n3 - 'статистический анализ'";
     public static final String CHOSE_ACTION_ERROR = "Номер манипуляции указано не корректно";
     public static final String ADDRESS_INPUT_EXAMPLE_FILE = "Укажите адресс фаила с примером текста откуда считываем текст, для расшифровки методом brute force";

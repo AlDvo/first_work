@@ -1,28 +1,23 @@
-package InputData;
+package dvorenenko.ru.input;
 
-import java.util.InputMismatchException;
 import java.util.Scanner;
 
-import static Constant.Constant.ALPHABET;
-import static Constant.Constant.INCORRECT_KEY;
-import static Constant.Constant.ENTER_KEY;
+import static dvorenenko.ru.constant.Constant.ALPHABET;
+import static dvorenenko.ru.constant.Constant.ENTER_KEY;
 
 public class Key {
-    private int key;
-
-    public void readKey() {
-        System.out.println(ENTER_KEY);
-        Scanner scan = new Scanner(System.in);
-
-        try {
-            this.key = scan.nextInt();
-        } catch (InputMismatchException e) {
-            System.out.println(INCORRECT_KEY);
-            readKey();
-        }
+    public int workWithKey() {
+        int key = readKey();
+        return keyCheck(key);
     }
 
-    public int keyCheck() {
+    private int readKey() {
+        System.out.println(ENTER_KEY);
+        Scanner scan = new Scanner(System.in);
+        return scan.nextInt();
+    }
+
+    private int keyCheck(int key) {
         int result = key;
         if (Math.abs(key) > ALPHABET.length && key > 0) {
             do {
@@ -34,9 +29,5 @@ public class Key {
             } while (result < ALPHABET.length);
         }
         return result;
-    }
-
-    public int getKey() {
-        return keyCheck();
     }
 }

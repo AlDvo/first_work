@@ -1,4 +1,4 @@
-package Action;
+package dvorenenko.ru.action;
 
 public enum ActionName {
     ENCRYPT,

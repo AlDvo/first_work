@@ -1,4 +1,6 @@
-import Action.ChoseAction;
+package dvorenenko.ru;
+
+import dvorenenko.ru.action.ChoseAction;
 
 public class Main {
 
