@@ -7,6 +7,7 @@ import java.nio.file.Path;
 import static dvorenenko.ru.constant.Constant.ERROR_EXTENSION_FILE;
 import static dvorenenko.ru.constant.Constant.EXTENSION;
 
+
 public class CheckPath {
 
     public void checkPath(Path path) throws ErrorExtensionException {
@@ -23,5 +24,4 @@ public class CheckPath {
         }
         return false;
     }
-
 }
