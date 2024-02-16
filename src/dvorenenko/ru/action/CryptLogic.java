@@ -1,20 +1,25 @@
 package dvorenenko.ru.action;
 
-import dvorenenko.ru.constant.Constant;
-
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import static dvorenenko.ru.constant.Constant.ALPHABET;
+
 public class CryptLogic {
 
+    public static final char CHAR_SPACE = ' ';
+    public static final String SPACE = " ";
+    public static final char CHAR_POINT = '.';
+    public static final char CHAR_COMMA = ',';
+    public static final int MIN_NUMBER_OF_ALPHABET_CHAR = 0;
 
     public List<Character> encrypt(String inputText, int key) {
         List<Character> outputText = new ArrayList<>();
 
-        for (int i = 0; i < inputText.length(); i++) {
-            changeCharWithKeyEncrypt(inputText, key, i, outputText);
+        for (int i = MIN_NUMBER_OF_ALPHABET_CHAR; i < inputText.length(); i++) {
+            makeOutputEncryptText(inputText, key, i, outputText);
         }
         return outputText;
     }
@@ -22,22 +27,19 @@ public class CryptLogic {
     public List<Character> decrypt(String inputText, int key) {
         List<Character> outputText = new ArrayList<>();
 
-        for (int i = 0; i < inputText.length(); i++) {
-            changeCharWithKeyDecrypt(inputText, key, i, outputText);
+        for (int i = MIN_NUMBER_OF_ALPHABET_CHAR; i < inputText.length(); i++) {
+            makeOutputDecryptText(inputText, key, i, outputText);
         }
         return outputText;
     }
 
     public int bruteForce(String exampleInputText, String decryptText) {
         int coincidence = Integer.MIN_VALUE;
-        int key = 0;
+        int key = MIN_NUMBER_OF_ALPHABET_CHAR;
         Set<String> oftenWordExampleText = findOftenWord(exampleInputText);
 
-        for (int i = 0; i < Constant.ALPHABET.length; i++) {
-            String cryptText = getStringRepresentation(decrypt(decryptText, i));
-            Set<String> oftenWordCryptText = findOftenWord(cryptText);
-
-            int tmpCoincidence = getCalculateMatchOftenWordBetweenText(oftenWordExampleText, oftenWordCryptText);
+        for (int i = MIN_NUMBER_OF_ALPHABET_CHAR; i < ALPHABET.length; i++) {
+            int tmpCoincidence = calculateCountMatchOftenWord(decryptText, i, oftenWordExampleText);
 
             if (tmpCoincidence > coincidence) {
                 coincidence = tmpCoincidence;
@@ -49,14 +51,10 @@ public class CryptLogic {
 
     public int statisticAnalyze(String inputText) {
         int coincidence = Integer.MIN_VALUE;
-        int key = 0;
-        List<Character> tempOutputText;
+        int key = MIN_NUMBER_OF_ALPHABET_CHAR;
 
-        for (int i = 0; i < Constant.ALPHABET.length; i++) {
-            int tmpCoincidence = 0;
-            tempOutputText = decrypt(inputText, i);
-
-            tmpCoincidence = getCalculateMatchPointCommaInText(tempOutputText, tmpCoincidence);
+        for (int i = MIN_NUMBER_OF_ALPHABET_CHAR; i < ALPHABET.length; i++) {
+            int tmpCoincidence = calculateCountMatchChar(inputText, i);
 
             if (tmpCoincidence > coincidence) {
                 coincidence = tmpCoincidence;
@@ -74,54 +72,11 @@ public class CryptLogic {
         }
         return builder.toString();
     }
+    private int calculateCountMatchOftenWord(String decryptText, int i, Set<String> oftenWordExampleText) {
+        int tmpCoincidence = MIN_NUMBER_OF_ALPHABET_CHAR;
+        String cryptText = getStringRepresentation(decrypt(decryptText, i));
+        Set<String> oftenWordCryptText = findOftenWord(cryptText);
 
-    private Set<String> findOftenWord(String text) {
-        List<String> example = new ArrayList<>(List.of(text.split(Constant.STRING_SPACE)));
-        Set<String> statistic = new HashSet<>();
-        for (String s : example) {
-            if (s.length() < Constant.MIN_SYMBOLS_FOR_FIND_WORD && !s.equals(Constant.STRING_SPACE)) {
-                statistic.add(s);
-            }
-        }
-        return statistic;
-    }
-
-    private boolean checkCharWithKeyMoreLength(String inputText, int i, int j, int numberOfSymbol, int length) {
-        return inputText.charAt(i) == Constant.ALPHABET[j] && numberOfSymbol >= length;
-    }
-
-    private boolean checkCharWithKeyLessLength(String inputText, int i, int j, int numberOfSymbol, int length) {
-        return inputText.charAt(i) == Constant.ALPHABET[j] && numberOfSymbol < length;
-    }
-
-    private void changeCharWithKeyEncrypt(String inputText, int key, int i, List<Character> outputText) {
-        for (int j = 0; j < Constant.ALPHABET.length; j++) {
-            int numberOfSymbol = j + key;
-            if (checkCharWithKeyLessLength(inputText, i, j, numberOfSymbol, Constant.ALPHABET.length)) {
-                outputText.add(Constant.ALPHABET[numberOfSymbol]);
-                break;
-            } else if (checkCharWithKeyMoreLength(inputText, i, j, numberOfSymbol, Constant.ALPHABET.length)) {
-                outputText.add(Constant.ALPHABET[numberOfSymbol - Constant.ALPHABET.length]);
-                break;
-            }
-        }
-    }
-
-    private void changeCharWithKeyDecrypt(String inputText, int key, int i, List<Character> outputText) {
-        for (int j = 0; j < Constant.ALPHABET.length; j++) {
-            int numberOfSymbol = j - key;
-            if (checkCharWithKeyMoreLength(inputText, i, j, numberOfSymbol, 0)) {
-                outputText.add(Constant.ALPHABET[numberOfSymbol]);
-                break;
-            } else if (checkCharWithKeyLessLength(inputText, i, j, numberOfSymbol, 0)) {
-                outputText.add(Constant.ALPHABET[numberOfSymbol + Constant.ALPHABET.length]);
-                break;
-            }
-        }
-    }
-
-    private int getCalculateMatchOftenWordBetweenText(Set<String> oftenWordExampleText, Set<String> oftenWordCryptText) {
-        int tmpCoincidence = 0;
         for (String example : oftenWordExampleText) {
             for (String crypt : oftenWordCryptText) {
                 if (example.equals(crypt)) {
@@ -132,14 +87,68 @@ public class CryptLogic {
         return tmpCoincidence;
     }
 
-    private int getCalculateMatchPointCommaInText(List<Character> tempOutputText, int tmpCoincidence) {
+
+
+    private int calculateCountMatchChar(String inputText, int i) {
+        List<Character> tempOutputText;
+        int tmpCoincidence = MIN_NUMBER_OF_ALPHABET_CHAR;
+        tempOutputText = decrypt(inputText, i);
 
         for (int j = 1; j < tempOutputText.size(); j++) {
-            if (tempOutputText.get(j) == Constant.CHAR_SPACE && tempOutputText.get(j - 1) == Constant.COMMA ||
-                    tempOutputText.get(j) == Constant.CHAR_SPACE && tempOutputText.get(j - 1) == Constant.POINT) {
+            if (tempOutputText.get(j) == CHAR_SPACE && tempOutputText.get(j - 1) == CHAR_COMMA ||
+                    tempOutputText.get(j) == CHAR_SPACE && tempOutputText.get(j - 1) == CHAR_POINT) {
                 tmpCoincidence++;
             }
         }
         return tmpCoincidence;
+    }
+
+
+
+    private static void makeOutputEncryptText(String inputText, int key, int i, List<Character> outputText) {
+        for (int j = MIN_NUMBER_OF_ALPHABET_CHAR; j < ALPHABET.length; j++) {
+            int symbol = j + key;
+            if (checkCharAndOffsetSymbolLessBorder(inputText, i, j, symbol, ALPHABET.length)) {
+                outputText.add(ALPHABET[symbol]);
+                break;
+            } else if (checkCharAndOffsetSymbolMoreBorder(inputText, i, j, symbol, ALPHABET.length)) {
+                outputText.add(ALPHABET[symbol - ALPHABET.length]);
+                break;
+            }
+        }
+    }
+
+    private static boolean checkCharAndOffsetSymbolMoreBorder(String inputText, int i, int j, int symbol, int borderAlphabet) {
+        return inputText.charAt(i) == ALPHABET[j] && symbol >= borderAlphabet;
+    }
+
+    private static boolean checkCharAndOffsetSymbolLessBorder(String inputText, int i, int j, int symbol, int borderAlphabet) {
+        return inputText.charAt(i) == ALPHABET[j] && symbol < borderAlphabet;
+    }
+
+
+    private static void makeOutputDecryptText(String inputText, int key, int i, List<Character> outputText) {
+        for (int j = MIN_NUMBER_OF_ALPHABET_CHAR; j < ALPHABET.length; j++) {
+            int symbol = j - key;
+            if (checkCharAndOffsetSymbolMoreBorder(inputText, i, j, symbol, MIN_NUMBER_OF_ALPHABET_CHAR)) {
+                outputText.add(ALPHABET[symbol]);
+                break;
+            } else if (checkCharAndOffsetSymbolLessBorder(inputText, i, j, symbol, MIN_NUMBER_OF_ALPHABET_CHAR)) {
+                outputText.add(ALPHABET[symbol + ALPHABET.length]);
+                break;
+            }
+        }
+    }
+
+
+    private Set<String> findOftenWord(String text) {
+        List<String> example = new ArrayList<>(List.of(text.split(SPACE)));
+        Set<String> statistic = new HashSet<>();
+        for (String s : example) {
+            if (s.length() < 4 && !s.equals(SPACE)) {
+                statistic.add(s);
+            }
+        }
+        return statistic;
     }
 }

@@ -2,6 +2,7 @@ package dvorenenko.ru.action;
 
 import dvorenenko.ru.input.InputFile;
 
+import dvorenenko.ru.input.Key;
 import dvorenenko.ru.output.OutputFile;
 
 import java.util.Scanner;
@@ -15,17 +16,32 @@ import static dvorenenko.ru.constant.Constant.CHOSE_ACTION_ERROR;
 
 public class ChoseAction {
 
+    private final CryptLogic cryptLogic;
+    private final Key key;
+    private final Action action;
+    private final OutputFile output;
+    private final InputFile input;
+
+
+    public ChoseAction(CryptLogic cryptLogic, Key key, Action action, OutputFile output, InputFile input) {
+        this.cryptLogic = cryptLogic;
+        this.key = key;
+        this.action = action;
+        this.output = output;
+        this.input = input;
+    }
+
     public void crypt() {
         int move = choseAction();
 
         if (ActionName.ENCRYPT.ordinal() == move) {
-            operationEncrypt();
+            operationEncrypt(cryptLogic, key, action, output, input);
         } else if (ActionName.DECRYPT.ordinal() == move) {
-            operationDecrypt();
+            operationDecrypt(cryptLogic, key, action, output, input);
         } else if (ActionName.BRUTE_FORCE.ordinal() == move) {
-            operationBruteForce();
+            operationBruteForce(cryptLogic, action, output, input, input);
         } else if (ActionName.STATISTICAL_ANALYSIS.ordinal() == move) {
-            operationStaticAnalyze();
+            operationStaticAnalyze(cryptLogic, action, output, input);
         } else {
             repeat();
         }
@@ -36,71 +52,57 @@ public class ChoseAction {
         crypt();
     }
 
-    private static void operationStaticAnalyze() {
-        String inputText = getInputText();
+    private static void operationStaticAnalyze(CryptLogic cryptLogic, Action action, OutputFile output, InputFile input) {
+        String inputText = getInputText(input);
 
         System.out.println(ADDRESS_OUTPUT_FILE);
-        OutputFile output = new OutputFile();
         output.readAndCheckOutputPath();
 
-        Action action = new Action();
-        String outputText = action.staticAnalyzeText(inputText);
-
+        String outputText = action.staticAnalyzeText(inputText, cryptLogic);
         output.writeFile(outputText);
     }
 
-    private static void operationBruteForce() {
-        String inputText = getInputText();
+    private static void operationBruteForce(CryptLogic cryptLogic, Action action, OutputFile output, InputFile input, InputFile inputExample) {
+        String inputText = getInputText(input);
 
         System.out.println(ADDRESS_INPUT_EXAMPLE_FILE);
-        InputFile inputExample = new InputFile();
         String inputTextExample = inputExample.checkNumberChar(inputExample.workWithInputFile());
 
         System.out.println(ADDRESS_OUTPUT_FILE);
-        OutputFile output = new OutputFile();
         output.readAndCheckOutputPath();
 
-        Action action = new Action();
-        String outputText = action.bruteForceText(inputTextExample, inputText);
-
+        String outputText = action.bruteForceText(inputTextExample, inputText, cryptLogic);
         output.writeFile(outputText);
     }
 
-    private static void operationDecrypt() {
-        String inputText = getInputText();
+    private static void operationDecrypt(CryptLogic cryptLogic, Key key, Action action, OutputFile output, InputFile input) {
+        String inputText = getInputText(input);
 
         System.out.println(ADDRESS_OUTPUT_FILE);
-        OutputFile output = new OutputFile();
         output.readAndCheckOutputPath();
 
-        Action action = new Action();
-        String outputText = action.decryptText(inputText);
-
+        String outputText = action.decryptText(inputText, cryptLogic, key);
         output.writeFile(outputText);
     }
 
-    private static void operationEncrypt() {
-        String inputText = getInputText();
+    private static void operationEncrypt(CryptLogic cryptLogic, Key key, Action action, OutputFile output, InputFile input) {
+        String inputText = getInputText(input);
 
         System.out.println(ADDRESS_OUTPUT_FILE);
-        OutputFile output = new OutputFile();
         output.readAndCheckOutputPath();
 
-        Action action = new Action();
-        String outputText = action.encryptText(inputText);
-
+        String outputText = action.encryptText(inputText, cryptLogic, key);
         output.writeFile(outputText);
     }
 
-    private static String getInputText() {
+    private static String getInputText(InputFile input) {
         System.out.println(ADDRESS_INPUT_FILE);
-        InputFile input = new InputFile();
         return input.workWithInputFile();
     }
 
     private int choseAction() {
-        System.out.println(CHOSE_ACTION);
         Scanner scan = new Scanner(System.in);
+        System.out.println(CHOSE_ACTION);
         return scan.nextInt();
     }
 }

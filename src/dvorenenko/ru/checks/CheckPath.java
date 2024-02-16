@@ -17,8 +17,8 @@ public class CheckPath {
     }
 
     private boolean checkExtension(String extension) {
-        for (String s : EXTENSION) {
-            if (extension.endsWith(s)) {
+        for (String correctExtension : EXTENSION) {
+            if (extension.endsWith(correctExtension)) {
                 return true;
             }
         }

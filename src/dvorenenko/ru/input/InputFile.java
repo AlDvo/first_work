@@ -22,6 +22,7 @@ public class InputFile {
 
     public String workWithInputFile() {
         readPath();
+        checkExtension();
         checkFile();
         return readInputText();
     }
@@ -30,7 +31,9 @@ public class InputFile {
         Scanner scan = new Scanner(System.in);
         String inputFileAddress = scan.nextLine();
         this.path = Path.of(inputFileAddress);
+    }
 
+    private void checkExtension() {
         CheckPath check = new CheckPath();
         try {
             check.checkPath(path);
@@ -64,8 +67,7 @@ public class InputFile {
         while (inputText.length() < 1000) {
             System.out.println(STRING_NOT_SUITABLE);
             System.out.println(ADDRESS_INPUT_EXAMPLE_FILE);
-            workWithInputFile();
-            checkNumberChar(inputText);
+            inputText = workWithInputFile();
         }
         return inputText;
     }
