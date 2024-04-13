@@ -12,6 +12,7 @@ import static dvorenenko.ru.constant.Constant.ADDRESS_INPUT_FILE;
 import static dvorenenko.ru.constant.Constant.ADDRESS_OUTPUT_FILE;
 import static dvorenenko.ru.constant.Constant.ADDRESS_INPUT_EXAMPLE_FILE;
 import static dvorenenko.ru.constant.Constant.CHOSE_ACTION_ERROR;
+import static dvorenenko.ru.constant.Constant.PROGRAM_COMPLETED;
 
 
 public class ChoseAction {
@@ -42,7 +43,9 @@ public class ChoseAction {
             operationBruteForce(cryptLogic, action, output, input, input);
         } else if (ActionName.STATISTICAL_ANALYSIS.ordinal() == move) {
             operationStaticAnalyze(cryptLogic, action, output, input);
-        } else {
+        }else if (ActionName.EXIT.ordinal() == move) {
+            System.out.println(PROGRAM_COMPLETED);
+        }  else {
             repeat();
         }
     }

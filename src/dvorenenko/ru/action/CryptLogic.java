@@ -105,7 +105,7 @@ public class CryptLogic {
 
 
 
-    private static void makeOutputEncryptText(String inputText, int key, int i, List<Character> outputText) {
+    private void makeOutputEncryptText(String inputText, int key, int i, List<Character> outputText) {
         for (int j = MIN_NUMBER_OF_ALPHABET_CHAR; j < ALPHABET.length; j++) {
             int symbol = j + key;
             if (checkCharAndOffsetSymbolLessBorder(inputText, i, j, symbol, ALPHABET.length)) {
@@ -118,16 +118,16 @@ public class CryptLogic {
         }
     }
 
-    private static boolean checkCharAndOffsetSymbolMoreBorder(String inputText, int i, int j, int symbol, int borderAlphabet) {
+    private boolean checkCharAndOffsetSymbolMoreBorder(String inputText, int i, int j, int symbol, int borderAlphabet) {
         return inputText.charAt(i) == ALPHABET[j] && symbol >= borderAlphabet;
     }
 
-    private static boolean checkCharAndOffsetSymbolLessBorder(String inputText, int i, int j, int symbol, int borderAlphabet) {
+    private boolean checkCharAndOffsetSymbolLessBorder(String inputText, int i, int j, int symbol, int borderAlphabet) {
         return inputText.charAt(i) == ALPHABET[j] && symbol < borderAlphabet;
     }
 
 
-    private static void makeOutputDecryptText(String inputText, int key, int i, List<Character> outputText) {
+    private void makeOutputDecryptText(String inputText, int key, int i, List<Character> outputText) {
         for (int j = MIN_NUMBER_OF_ALPHABET_CHAR; j < ALPHABET.length; j++) {
             int symbol = j - key;
             if (checkCharAndOffsetSymbolMoreBorder(inputText, i, j, symbol, MIN_NUMBER_OF_ALPHABET_CHAR)) {

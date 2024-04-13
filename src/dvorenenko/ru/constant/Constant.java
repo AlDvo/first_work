@@ -12,9 +12,10 @@ public class Constant {
     public static final String ERROR_WRITE_FILE = "Ошибка при записи данных в фаил";
     public static final String ERROR_EXTENSION_FILE = "НЕ корректное расширение фаила";
     public static final String ENTER_KEY = "Укажите ключ смещения";
-    public static final String CHOSE_ACTION = "Укажите номер действия: \n0 - 'шифровать',\n1 - 'расшифровать',\n2 - 'brute force',\n3 - 'статистический анализ'";
+    public static final String CHOSE_ACTION = "Укажите номер действия: \n0 - 'шифровать',\n1 - 'расшифровать',\n2 - 'brute force',\n3 - 'статистический анализ',\n4 - 'выход'";
     public static final String CHOSE_ACTION_ERROR = "Номер манипуляции указано не корректно";
     public static final String ADDRESS_INPUT_EXAMPLE_FILE = "Укажите адресс фаила с примером текста откуда считываем текст, для расшифровки методом brute force";
     public static final String STRING_NOT_SUITABLE = "Данный текст не подходит для анализа";
     public static final String REPEAT_ADDRESS_FILE = "Укажите корректный адресс фаила";
+    public static final String PROGRAM_COMPLETED = "Программа завершена";
 }
